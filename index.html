@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+
+<head>
+    <meta charset='utf-8'>
+    <meta name='description' content=''>
+    <meta name='author' content='Mill'>
+    <title>Whack A Mole!</title>
+    <style>
+        .grid {
+            display: grid;
+            grid-template-rows: repeat(3, 150px);
+            grid-template-columns: repeat(3, 200px);
+            max-width: 600px;
+        }
+
+        .square {
+            border: 1px solid black;
+        }
+
+        .mole {
+            background: url(mole.png);
+            background-size: cover;
+        }
+    </style>
+</head>
+
+<body>
+    <h1>Whack a mole!</h1>
+    <h2>Your score: <span id="score">0</span> </h2>
+
+    <h2>Seconds left: <span id="time-left">60</span></h2>
+
+    <div class="grid">
+        <div class="square" id="1"></div>
+        <div class="square" id="2"></div>
+        <div class="square mole" id="3"></div>
+        <div class="square" id="4"></div>
+        <div class="square" id="5"></div>
+        <div class="square" id="6"></div>
+        <div class="square" id="7"></div>
+        <div class="square" id="8"></div>
+        <div class="square" id="9"></div>
+    </div>
+
+    <script>
+        const square = document.querySelectorAll('.square')
+        const mole = document.querySelectorAll('.mole')
+        let timeleft = document.querySelector('#time-left')
+        let score = document.querySelector('#score')
+
+        let result = 0
+        let currentTime = timeleft.textContent
+
+        function randomSquare() {
+            square.forEach(className => {
+                className.classList.remove('mole')
+            })
+            let randomPosition = square[Math.floor(Math.random() * 9)]
+            randomPosition.classList.add('mole')
+
+            hitPosition = randomPosition.id
+        }
+
+        square.forEach(id => {
+            id.addEventListener('mouseup', () => {
+                if (id.id === hitPosition) {
+                    result = result + 1
+                    score.textContent = result
+                }
+            })
+        })
+
+        function moveMole() {
+            let timerId = null
+            timerId = setInterval(randomSquare, 900)
+        }
+
+        moveMole()
+
+        function countDown() {
+            currentTime--
+            timeleft.textContent = currentTime
+            if (currentTime === 0) {
+                clearInterval(timerId)
+                alert('GAME OVER! Your final score is' + result)
+            }
+        }
+
+        let timerId = setInterval(countDown, 1000)
+    </script>
+</body>
+
+</html>
