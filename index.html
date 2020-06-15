@@ -66,27 +66,42 @@
                 if (id.id === hitPosition) {
                     result = result + 1
                     score.textContent = result
+                    console.log(result)
+                    switch (result) {
+                        case 3:
+                            timerID = setInterval(randomSquare, 900)
+                            break;
+                        case 7:
+                            timerID = setInterval(randomSquare, 800)
+                            break;
+                        case 15:
+                            timerID = setInterval(randomSquare, 500)
+                            break;
+                        case 20:
+                            timerID = setInterval(randomSquare, 300)
+                            break;
+                    }
                 }
             })
         })
 
         function moveMole() {
-            let timerId = null
-            timerId = setInterval(randomSquare, 900)
+            let timerID = null
+            timerID = setInterval(randomSquare, 1000)
         }
 
         moveMole()
+
+        let timerId = setInterval(countDown, 1000)
 
         function countDown() {
             currentTime--
             timeleft.textContent = currentTime
             if (currentTime === 0) {
                 clearInterval(timerId)
-                alert('GAME OVER! Your final score is' + result)
+                alert('GAME OVER! Your final score is ' + result)
             }
         }
-
-        let timerId = setInterval(countDown, 1000)
     </script>
 </body>
 
